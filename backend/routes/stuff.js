@@ -9,7 +9,7 @@ const book = require ('../models/book.js')
 
 router.get("/api/books", stuffCtrl.getAllBooks);
 router.get("/api/books/:id", stuffCtrl.getOneBook);
-router.get("/api/books/bestrating", stuffCtrl.bestBooks); //le problème est ici
+router.get("/api/books/bestrating", stuffCtrl.bestBooks); //le problème est ici // le titre ne s'affiche pas
 router.post("/api/books", auth, multer, stuffCtrl.createBook);
 router.post("/books/:id/rating", auth, stuffCtrl.Rating);
 router.put("/api/books/:id", auth, multer, stuffCtrl.modifyBook);

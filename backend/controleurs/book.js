@@ -4,12 +4,10 @@ exports.createBook = (req, res, next) => {
   const bookObject = JSON.parse(req.body.book);
   delete bookObject._id;
   delete bookObject._userId;
-  console.log(bookObject)
   const book = new Book({
     ...bookObject,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
   });
-  console.log(book)
   book
     .save()
     .then(() => {
@@ -21,8 +19,6 @@ exports.createBook = (req, res, next) => {
 };
 
 exports.getOneBook = (req, res, next) => {
-  console.log(req.params.id);
-  
   Book.findOne({
     _id: req.params.id,
   })
@@ -98,7 +94,7 @@ exports.getAllBooks = (req, res, next) => {
 };
 exports.bestBooks = async (req, res, next) => {
   try {
-    const bestBooks = await Book.find().sort({ average_rating: -1 }).limit(3);
+    const bestBooks = await Book.find().sort({ averageRating: -1 }).limit(3);
     res.status(200).json(bestBooks);
   } catch (error) {
     res.status(400).json({ error: error });
