@@ -1,6 +1,6 @@
 const Book = require("../models/book.js");
 const fs = require("fs");
-const sharp = require("sharp");
+const sharp = require('sharp');
 
 exports.createBook = (req, res, next) => {
   const bookObject = JSON.parse(req.body.book);
@@ -18,20 +18,29 @@ exports.createBook = (req, res, next) => {
 
   // Redimensionne l'image et l'enregistre dans le dossier d'images.
   sharp(req.file.path)
-    .resize(200, 260)
-    .toFile(`images/${req.file.filename}`, (err) => {
+    .resize(400, 500)
+    .toFile(`images/resized_${req.file.filename}`, (err) => {
       if (err) {
         return res.status(400).json({ error: err.message });
       }
-      // Enregistre le nouveau livre dans la base de données.
-      book
-        .save()
-        .then(() => {
-          res.status(201).json({ message: "Post saved successfully!" });
-        })
-        .catch((error) => {
-          res.status(400).json({ error: error });
-        });
+      // Une fois l'image redimensionnée et enregistrée, supprime l'image originale.
+      fs.unlink(req.file.path, (err) => {
+        if (err) {
+          return res.status(400).json({ error: err.message });
+        }
+        // Met à jour l'URL de l'image pour pointer vers la nouvelle image redimensionnée.
+        book.imageUrl = `${req.protocol}://${req.get("host")}/images/resized_${req.file.filename}`;
+
+        // Enregistre le nouveau livre dans la base de données.
+        book
+          .save()
+          .then(() => {
+            res.status(201).json({ message: "Post saved successfully!" });
+          })
+          .catch((error) => {
+            res.status(400).json({ error: error });
+          });
+      });
     });
 };
 
