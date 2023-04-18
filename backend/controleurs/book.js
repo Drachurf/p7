@@ -1,11 +1,13 @@
 const Book = require("../models/book.js");
 const fs = require("fs");
+const sharp = require("sharp");
 
 exports.createBook = (req, res, next) => {
   const bookObject = JSON.parse(req.body.book);
   // Supprime les propriétés _id et _userId de l'objet bookObject.
   delete bookObject._id;
   delete bookObject._userId;
+
   // Crée une nouvelle instance du modèle Book avec les propriétés de bookObject et l'URL de l'image ajoutée à la requête.
   const book = new Book({
     ...bookObject,
@@ -13,14 +15,23 @@ exports.createBook = (req, res, next) => {
       req.file.filename
     }`,
   });
-  // Enregistre le nouveau livre dans la base de données.
-  book
-    .save()
-    .then(() => {
-      res.status(201).json({ message: "Post saved successfully!" });
-    })
-    .catch((error) => {
-      res.status(400).json({ error: error });
+
+  // Redimensionne l'image et l'enregistre dans le dossier d'images.
+  sharp(req.file.path)
+    .resize(200, 260)
+    .toFile(`images/${req.file.filename}`, (err) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      }
+      // Enregistre le nouveau livre dans la base de données.
+      book
+        .save()
+        .then(() => {
+          res.status(201).json({ message: "Post saved successfully!" });
+        })
+        .catch((error) => {
+          res.status(400).json({ error: error });
+        });
     });
 };
 
