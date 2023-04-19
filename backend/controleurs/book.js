@@ -110,7 +110,6 @@ exports.modifyBook = (req, res, next) => {
   });
 };
 
-
 exports.getAllBooks = (req, res, next) => {
   // Récupère tous les livres de la base de données.
   Book.find()
@@ -123,8 +122,6 @@ exports.getAllBooks = (req, res, next) => {
       });
     });
 };
-
-
 
 exports.getOneBook = (req, res, next) => {
   // Récupère un livre de la base de données en utilisant son ID.
@@ -141,9 +138,6 @@ exports.getOneBook = (req, res, next) => {
     });
 };
 
-
-
-// Cette fonction supprime un livre de la base de données
 exports.deleteBook = (req, res, next) => {
   Book.findOne({ _id: req.params.id })
     .then((book) => {
@@ -170,7 +164,6 @@ exports.deleteBook = (req, res, next) => {
     });
 };
 
-// Cette fonction renvoie les trois livres avec les meilleures notes de la base de données
 exports.bestRating = async (req, res, next) => {
   try {
     // find pour récupérer les books, puis trie selon averageRating dans l'ordre décroissant + limit de 3
