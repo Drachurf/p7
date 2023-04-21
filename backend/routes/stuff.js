@@ -4,6 +4,7 @@ const auth = require("../middleware/auth.js");
 const stuffCtrl = require("../controleurs/book.js");
 const multer = require('../middleware/multer-config.js')
 
+// le CRUD
 router.get("/api/books/bestrating", stuffCtrl.bestRating);
 router.get("/api/books", stuffCtrl.getAllBooks);
 router.get("/api/books/:id", stuffCtrl.getOneBook);

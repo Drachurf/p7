@@ -15,7 +15,7 @@ exports.createBook = (req, res, next) => {
       req.file.filename
     }`,
   });
-  
+
   // Redimensionne l'image et l'enregistre dans le dossier d'images.
   sharp(req.file.path)
     .resize(500, 400)
@@ -48,6 +48,7 @@ exports.createBook = (req, res, next) => {
       });
     });
 };
+
 exports.modifyBook = (req, res, next) => {
   // Vérifie si une image est attachée à la requête POST, et modifie les propriétés de l'objet bookObject en conséquence.
   const bookObject = req.file
