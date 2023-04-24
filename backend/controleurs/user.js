@@ -7,7 +7,7 @@ exports.signup = (req, res, next) => {
 
  // Vérifier si le mot de passe respecte les critères de sécurité
  if (!req.body.password || req.body.password.length < 8 || !/[!@#$%^&*(),.?":{}|<>]/.test(req.body.password)) {
-  return res.status(400).json({ error: "Le mot de passe doit contenir au moins 8 caractères et un caractère spécial !" });
+  return res.status(400).json({ error: `Le mot de passe doit contenir au moins 8 caractères et un caractère spécial : "[!@#$%^&*(),.?":{}|<>]" !` });
 }
 
   // Hashage du mot de passe avec Bcrypt (10 est le coût de l'algorithme de hachage)
