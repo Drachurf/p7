@@ -59,6 +59,8 @@ exports.modifyBook = (req, res, next) => {
         }`,
       }
     : { ...req.body };
+  // Supprime la propriété _userId de l'objet bookObject.
+  delete bookObject._userId;
   // Récupère un livre de la base de données en utilisant son ID.
   Book.findOne({ _id: req.params.id })
   .then((book) => {
@@ -112,6 +114,7 @@ exports.modifyBook = (req, res, next) => {
     res.status(400).json({ error });
   });
 }
+
 exports.getAllBooks = (req, res, next) => {
   // Récupère tous les livres de la base de données.
   Book.find()
