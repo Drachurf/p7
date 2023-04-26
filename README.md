@@ -13,8 +13,6 @@ Après avoir récupéré le REPO exécutez la commande npm install pour installe
 Une fois les dépendances installées allez dans le fichier backend et dans le fichier frontend, et lancer dans les deux fichiers avec la commande npm start.
 
 
-Difficultés : apprendre à créer un backend pour la première fois. Les cours OCR m'ont permis de bien comprendre les tenants et aboutissants du projet pour réaliser celui-ci.
-
 Compétences : 
 - Implémenter un modèle logique de données conformément à la réglementation
 - Mettre en oeuvre des opérations CRUD de manière sécurisée
