@@ -2,16 +2,21 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
   try {
-    // Récupère le token JWT présent dans l'en-tête "Authorization" de la requête
-    const token = req.headers.authorization.split(' ')[1];
-    // Vérifie la validité du token en le décodant avec la clé secrète
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new Error('Missing or invalid Authorization header');
+    }
+    const token = authHeader.split(' ')[1];
     const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
-    // Récupère l'identifiant de l'utilisateur depuis le token décodé
-    const userId = decodedToken.userId;
-    // Ajoute l'identifiant de l'utilisateur à la requête pour qu'il soit disponible pour les prochaines fonctions middleware
-    req.auth = {userId: userId};
+    req.userId = decodedToken.userId;
+
+    // Vérification de l'utilisateur avant la modification du livre
+    if (req.params.userId && req.params.userId !== req.userId) {
+      throw new Error('Unauthorized request: User ID does not match book owner');
+    }
+
     next();
-  } catch(error) {
-    res.status(401).json({ error });
+  } catch (error) {
+    res.status(403).json({ error: error.message });
   }
 };

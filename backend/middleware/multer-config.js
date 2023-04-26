@@ -1,4 +1,5 @@
 const multer = require('multer');
+const path = require('path');
 
 // Définition des types MIME autorisés et leurs extensions
 const MIME_TYPES = {
@@ -14,11 +15,12 @@ const storage = multer.diskStorage({
     callback(null, 'images');
   },
   filename: (req, file, callback) => {
-    // Crée un nom unique pour le fichier en remplaçant les espaces par des underscores et 
-    // en ajoutant la date et l'extension appropriée
-    const name = file.originalname.split(' ').join('_');
+    const fileInfo = path.parse(file.originalname);
     const extension = MIME_TYPES[file.mimetype];
-    callback(null, name + Date.now() + '.' + extension);
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const fileName = fileInfo.name.replace(/ /g, '_');
+    const newFileName = `${fileName}-${uniqueSuffix}${extension ? '.' + extension : ''}`;
+    callback(null, newFileName);
   }
 });
 
