@@ -36,7 +36,7 @@ exports.login = (req, res, next) => {
     .then((user) => {
       // Si aucun utilisateur = une erreur
       if (!user) {
-        return res.status(401).json({ error: "Utilisateur non trouvé !" });
+        return res.status(401).json({ error: "Utilisateur ou mot de passe non trouvé !" });
       }
       // Comparaison du mot de passe fourni avec le mot de passe hashé
       bcrypt
@@ -44,7 +44,7 @@ exports.login = (req, res, next) => {
         .then((valid) => {
           // Si les mots de passe ne correspondent pas = erreur
           if (!valid) {
-            return res.status(401).json({ error: "Mot de passe incorrect !" });
+            return res.status(401).json({ error: "Utilisateur ou mot de passe non trouvé !" });
           }
           // Si les mots de passe correspondent = l'ID de l'utilisateur et token d'authentification avec JWT
           res.status(200).json({
