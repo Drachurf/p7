@@ -1,33 +1,39 @@
 const User = require("../models/user.js");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
+const emailValidator = require('email-validator');
 
 // Fonction d'inscription
 exports.signup = (req, res, next) => {
 
- // Vérifier si le mot de passe respecte les critères de sécurité
- if (!req.body.password || req.body.password.length < 8 || !/[!@#$%^&*(),.?":{}|<>]/.test(req.body.password)) {
-  return res.status(400).json({ error: `Le mot de passe doit contenir au moins 8 caractères et un caractère spécial : "[!@#$%^&*(),.?":{}|<>]" !` });
-}
-
-  // Hashage du mot de passe avec Bcrypt (10 est le coût de l'algorithme de hachage)
-  bcrypt.hash(req.body.password, 10)
-    .then(hash => {
-      // Création d'un nouvel utilisateur
-      const user = new User({
-        email: req.body.email,
-        password: hash
-      });
-      // Enregistrement de l'utilisateur dans la base de données
-      user.save()
-        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-        .catch(error => {
-          console.log(error);
-          res.status(400).json({ error });
-      });
-    })
-    .catch(error => res.status(500).json({ error }));
-};
+  // Vérifier si l'email est valide
+  if (!emailValidator.validate(req.body.email)) {
+   return res.status(400).json({ error: `L'adresse email fournie n'est pas valide !` });
+  }
+ 
+  // Vérifier si le mot de passe respecte les critères de sécurité
+  if (!req.body.password || req.body.password.length < 8 || !/[!@#$%^&*(),.?":{}|<>]/.test(req.body.password)) {
+   return res.status(400).json({ error: `Le mot de passe doit contenir au moins 8 caractères et un caractère spécial : "[!@#$%^&*(),.?":{}|<>]" !` });
+ }
+ 
+   // Hashage du mot de passe avec Bcrypt (10 est le coût de l'algorithme de hachage)
+   bcrypt.hash(req.body.password, 10)
+     .then(hash => {
+       // Création d'un nouvel utilisateur
+       const user = new User({
+         email: req.body.email,
+         password: hash
+       });
+       // Enregistrement de l'utilisateur dans la base de données
+       user.save()
+         .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+         .catch(error => {
+           console.log(error);
+           res.status(400).json({ error });
+       });
+     })
+     .catch(error => res.status(500).json({ error }));
+ };
 
 // Fonction de connexion
 exports.login = (req, res, next) => {

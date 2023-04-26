@@ -192,12 +192,16 @@ exports.Ratings = (req, res, next) => {
     .then((book) => {
       // Extraire l'identifiant utilisateur et la note de la demande
       let userId = req.body.userId;
-      let grade = req.body.rating;
+      let grade = parseInt(req.body.rating);
       // Vérifier si userId et grade sont définis et ont une valeur
-      if (!userId || !grade) {
+      if (!userId || isNaN(grade)) {
         return res
           .status(400)
           .json({ error: "Merci de remplir tous les champs." });
+      }
+      // Vérifier que la note est un entier compris entre 0 et 5
+      if (grade < 0 || grade > 5) {
+        return res.status(400).json({ error: "La note doit être comprise entre 0 et 5." });
       }
       const alreadyRated = book.ratings.some(
         (rating) => rating.userId === userId
