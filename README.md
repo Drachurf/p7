@@ -16,7 +16,10 @@ lancer dans dans le terminal
 npm start
 ```
 
-Dans le fichier backend, procéder de la même façon mais inscriver " nodemon server ".
+Dans le fichier backend, procéder de la même façon
+```
+npm start
+```
 
 Enfin, pour faire fonctionner le backend, il vous faudra renomer le fichier ".env.exemple" en ".env" avec à l'intérieur : 
 
