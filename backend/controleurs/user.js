@@ -2,6 +2,10 @@ const User = require("../models/user.js");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const emailValidator = require('email-validator');
+require('dotenv').config();
+
+//clef dans fichier .env
+const JWT_SECRET = process.env.JWT_SECRET
 
 // Fonction d'inscription
 exports.signup = (req, res, next) => {
@@ -55,7 +59,7 @@ exports.login = (req, res, next) => {
           // Si les mots de passe correspondent = l'ID de l'utilisateur et token d'authentification avec JWT
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {expiresIn: "24h"}),
+            token: jwt.sign({ userId: user._id }, JWT_SECRET, {expiresIn: "24h"}),
           });
         })
     

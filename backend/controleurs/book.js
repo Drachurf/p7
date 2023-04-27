@@ -196,7 +196,8 @@ exports.Ratings = (req, res, next) => {
       // Mettre à jour la note moyenne du livre
       const ratingsCount = book.ratings.length;
       let sum = 0;
-      for (let i = 0; i < ratingsCount; i++) {
+      // on commence a 1 pour éliminer la première note de l'auteur. 
+      for (let i = 1; i < ratingsCount; i++) {
         sum += book.ratings[i].grade;
       }
       // Math.round pour convertir le chiffre en entier
