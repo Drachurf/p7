@@ -23,7 +23,7 @@ exports.createBook = (req, res, next) => {
       req.file.filename
     }`,
     averageRating: 0,
-    rating: [],
+    ratings: [],
   });
 
   // Redimensionne l'image et l'enregistre dans le dossier d'images.
@@ -197,7 +197,7 @@ exports.Ratings = (req, res, next) => {
       const ratingsCount = book.ratings.length;
       let sum = 0;
       // on commence a 1 pour éliminer la première note de l'auteur. 
-      for (let i = 1; i < ratingsCount; i++) {
+      for (let i = 0; i < ratingsCount; i++) {
         sum += book.ratings[i].grade;
       }
       // Math.round pour convertir le chiffre en entier
