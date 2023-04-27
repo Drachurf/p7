@@ -10,10 +10,16 @@ Lancement du projet :
 
 Après avoir récupéré le REPO exécutez la commande npm install pour installer les dépendances du projet.
 
-Une fois les dépendances installées allez dans le fichier frontend, et lancer dans dans le terminal " npm start ".
+Une fois les dépendances installées allez dans le fichier frontend,
+lancer dans dans le terminal 
+```
+npm start
+```
+
 Dans le fichier backend, procéder de la même façon mais inscriver " nodemon server ".
 
-Enfin, pour faire fonctionner le backend, il vous faudra créer un fichier ".env" avec à l'intérieur : 
+Enfin, pour faire fonctionner le backend, il vous faudra renomer le fichier ".env.exemple" en ".env" avec à l'intérieur : 
+
 https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466348-configurez-votre-base-de-donnees
 
 DB_CONNECT=`lien vers votre base de donnée MongoDB`
