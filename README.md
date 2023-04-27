@@ -17,6 +17,7 @@ Enfin, pour faire fonctionner le backend, il vous faudra créer un fichier ".env
 https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466348-configurez-votre-base-de-donnees
 
 DB_CONNECT=`lien vers votre base de donnée MongoDB`
+
 JWT_SECRET="CREER_UN_TOKEN_SECURISE"
 
 
