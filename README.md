@@ -21,14 +21,6 @@ Dans le fichier backend, procéder de la même façon
 npm start
 ```
 
-Enfin, pour faire fonctionner le backend, il vous faudra renomer le fichier ".env.exemple" en ".env" avec à l'intérieur : 
-
-https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466348-configurez-votre-base-de-donnees
-
-DB_CONNECT=`lien vers votre base de donnée MongoDB`
-
-JWT_SECRET="CREER_UN_TOKEN_SECURISE"
-
 
 Compétences : 
 - Implémenter un modèle logique de données conformément à la réglementation
