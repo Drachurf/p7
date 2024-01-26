@@ -9,11 +9,10 @@ require('dotenv').config();
 
 mongoose.set('strictQuery', false);
 
-mongoose
-  .connect(
-    process.env.DB_CONNECT,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  ) // se connecte à la base de données MongoDB via l'URL fournie, avec les options indiquées
+mongoose.connect(
+  process.env.DB_CONNECT,
+  { useNewUrlParser: true, useUnifiedTopology: true }
+)// se connecte à la base de données MongoDB via l'URL fournie, avec les options indiquées
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 const app = express(); 
